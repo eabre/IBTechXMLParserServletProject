@@ -11,6 +11,7 @@ import org.hibernate.service.ServiceRegistry;
 
 import com.ibtech.model.Account;
 import com.ibtech.model.Address;
+import com.ibtech.model.Command;
 import com.ibtech.model.Customer;
 import com.ibtech.model.Phone;
 
@@ -35,7 +36,7 @@ public class HibernateUtil {
 
 				settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
-				settings.put(Environment.HBM2DDL_AUTO, "create-drop");
+				settings.put(Environment.HBM2DDL_AUTO, "update");
 
 				configuration.setProperties(settings);
 				
@@ -43,6 +44,7 @@ public class HibernateUtil {
 				configuration.addAnnotatedClass(Address.class);
 				configuration.addAnnotatedClass(Customer.class);
 				configuration.addAnnotatedClass(Phone.class);
+				configuration.addAnnotatedClass(Command.class);
 
 				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 						.applySettings(configuration.getProperties()).build();

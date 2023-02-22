@@ -18,7 +18,7 @@ public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private long id;
+	private int id;
 	
 	@Column(name = "iban")
 	private String iban;
@@ -49,11 +49,11 @@ public class Account {
 		this.customer = customer;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -52,7 +52,7 @@ public class PhoneDao {
 		
 	}	
 	//delete object
-	public void deletePhone(long id) {
+	public void deletePhone(int id) {
 		
 		Phone phone = null;
 		
@@ -77,7 +77,7 @@ public class PhoneDao {
 	}	
 
 	//read object
-	public Object getPhoneById(long id) {
+	public Object getPhoneById(int id) {
 		
 		Phone phone = null;
 		
@@ -115,7 +115,7 @@ public class PhoneDao {
 			transaction = session.beginTransaction();
 			
 			//get phones
-			phones = session.createQuery("from phone").list();
+			phones = session.createCriteria(Phone.class).list();
 			
 			//commit the transaction
 			transaction.commit();

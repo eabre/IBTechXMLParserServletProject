@@ -14,7 +14,7 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private long id;
+	private int id;
 	
 	@Column(name = "name")
 	private String name;
@@ -33,11 +33,11 @@ public class Customer {
 		this.tckn = tckn;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

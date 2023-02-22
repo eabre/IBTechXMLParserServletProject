@@ -1,17 +1,22 @@
 package com.ibtech;
 
+import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ibtech.command.CommandExecuter;
 import com.ibtech.dao.AccountDao;
 import com.ibtech.dao.AddressDao;
 import com.ibtech.dao.CustomerDao;
 import com.ibtech.dao.PhoneDao;
 import com.ibtech.model.Account;
 import com.ibtech.model.Address;
+import com.ibtech.model.Command;
 import com.ibtech.model.Customer;
 import com.ibtech.model.Phone;
+import com.ibtech.operations.AccountOperations;
+import com.ibtech.operations.CustomerOperations;
 
 public class App 
 {
@@ -23,7 +28,7 @@ public class App
     	
     	customerList.get(0).setName("Deniz");
     	customerList.get(0).setSurname("Özkan");
-    	
+
     	accountList.get(0).setIban("TR003545");
     	
     	addressList.get(0).setCity("Mardin");
@@ -34,6 +39,7 @@ public class App
     	accountDao.updateAccount(accountList.get(0));
     	addressDao.updateAddress(addressList.get(0));
     	phoneDao.updatePhone(phoneList.get(0));
+    	
 	}
 	public static void createDatas(List<Customer> customerList, List<Account> accountList, List<Address> addressList, List<Phone> phoneList) {
     	CustomerDao customerDao = new CustomerDao();
@@ -73,6 +79,19 @@ public class App
     	AddressDao addressDao = new AddressDao();
     	PhoneDao phoneDao = new PhoneDao();
     	
+    	customerDao.getAllCustomers().forEach((n) -> customerList.add(n));
+    	accountDao.getAllAccounts().forEach((n) -> accountList.add(n));
+    	addressDao.getAllAddresses().forEach((n) -> addressList.add(n));
+    	phoneDao.getAllPhones().forEach((n) -> phoneList.add(n));
+    	
+    	System.out.println();
+    	System.out.println(customerList);
+    	System.out.println(accountList);
+    	System.out.println();
+    	System.out.println(addressList);
+    	System.out.println();
+    	System.out.println(phoneList);
+    	/*
     	System.out.println();
     	customerList.forEach((n) -> System.out.println(customerDao.getCustomerById(n.getId())));
     	System.out.println();
@@ -81,6 +100,11 @@ public class App
     	addressList.forEach((n) -> System.out.println(addressDao.getAddressById(n.getId())));
     	System.out.println();
     	phoneList.forEach((n) -> System.out.println(phoneDao.getPhoneById(n.getId())));
+		*/
+    	
+    	//System.out.println(customerDao.getCustomerById(10));
+    	
+    	
 
 	}
 	
@@ -106,10 +130,24 @@ public class App
     	List<Address> addressList = new ArrayList<Address>();
     	List<Phone> phoneList = new ArrayList<Phone>();
     	
-    	createDatas(customerList, accountList, addressList, phoneList);
-    	updateDatas(customerList, accountList, addressList, phoneList);
-    	getAllDatas(customerList, accountList, addressList, phoneList);
-    	deleteAllDatas(customerList, accountList, addressList, phoneList);
-
+    	Customer customer = new Customer("ayaz", "burak", "4545");
+    	//createDatas(customerList, accountList, addressList, phoneList);
+    	//getAllDatas(customerList, accountList, addressList, phoneList);
+    	//updateDatas(customerList, accountList, addressList, phoneList);
+    	//deleteAllDatas(customerList, accountList, addressList, phoneList);
+    	
+		CustomerOperations customerOperations = new CustomerOperations();
+    	
+		try {
+			CommandExecuter.executer("add_customer_info").invoke(customerOperations, customerList, customer);
+			System.out.println(customerList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    
+    	
+    	
     }
+    
 }

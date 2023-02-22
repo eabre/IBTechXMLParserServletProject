@@ -52,7 +52,7 @@ public class CustomerDao {
 		
 	}	
 	//delete object
-	public void deleteCustomer(long id) {
+	public void deleteCustomer(int id) {
 		
 		Customer customer = null;
 		
@@ -77,7 +77,7 @@ public class CustomerDao {
 	}	
 
 	//read object
-	public Object getCustomerById(long id) {
+	public Customer getCustomerById(int id) {
 		
 		Customer customer = null;
 		
@@ -115,7 +115,7 @@ public class CustomerDao {
 			transaction = session.beginTransaction();
 			
 			//get customers
-			customers = session.createQuery("from customer").list();
+			customers = session.createCriteria(Customer.class).list();
 			
 			//commit the transaction
 			transaction.commit();

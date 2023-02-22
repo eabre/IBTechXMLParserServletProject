@@ -52,7 +52,7 @@ public class AccountDao {
 		
 	}	
 	//delete object
-	public void deleteAccount(long id) {
+	public void deleteAccount(int id) {
 		
 		Account account = null;
 		
@@ -77,7 +77,7 @@ public class AccountDao {
 	}	
 
 	//read object
-	public Object getAccountById(long id) {
+	public Object getAccountById(int id) {
 		
 		Account account = null;
 		
@@ -115,7 +115,7 @@ public class AccountDao {
 			transaction = session.beginTransaction();
 			
 			//get accounts
-			accounts = session.createQuery("from account").list();
+			accounts = session.createCriteria(Account.class).list();
 			
 			//commit the transaction
 			transaction.commit();

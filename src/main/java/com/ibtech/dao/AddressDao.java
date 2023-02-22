@@ -52,7 +52,7 @@ public class AddressDao {
 		
 	}	
 	//delete object
-	public void deleteAddress(long id) {
+	public void deleteAddress(int id) {
 		
 		Address address = null;
 		
@@ -77,7 +77,7 @@ public class AddressDao {
 	}	
 
 	//read object
-	public Object getAddressById(long id) {
+	public Object getAddressById(int id) {
 		
 		Address address = null;
 		
@@ -115,7 +115,7 @@ public class AddressDao {
 			transaction = session.beginTransaction();
 			
 			//get addresss
-			addresss = session.createQuery("from address").list();
+			addresss = session.createCriteria(Address.class).list();
 			
 			//commit the transaction
 			transaction.commit();
