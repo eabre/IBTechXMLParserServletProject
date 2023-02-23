@@ -3,21 +3,62 @@ package com.ibtech.operations;
 import java.util.List;
 
 import com.ibtech.model.Customer;
+import com.ibtech.bag.Bag;
+import com.ibtech.bag.BagKey;
+import com.ibtech.dao.CustomerDao;
 
 public class CustomerOperations {
 
-	public void add(List<Customer> customerList, Customer customer) {
-		
-		customerList.add(customer);
+	private CustomerDao customerDao;
+
+	public CustomerOperations() {
+		this.customerDao = new CustomerDao();
 	}
 	
-	public void update(List<Customer> customerList, Customer customer, int index) {
+	public Bag add(Bag bag) {
 		
-		customerList.set(index, customer);
+		String name = (String) bag.getValue(BagKey.NAME);
+		String surname = (String) bag.getValue(BagKey.SURNAME);
+		String tckn = (String) bag.getValue(BagKey.TCKN);
+		
+		Customer customer = customerDao.saveCustomer(new Customer(name, surname, tckn));
+		Bag customerBag = new Bag();
+		
+		customerBag.put(BagKey.ID, customer.getId());
+		customerBag.put(BagKey.NAME, customer.getName());
+		customerBag.put(BagKey.SURNAME, customer.getSurname());
+		customerBag.put(BagKey.TCKN, customer.getTckn());
+		
+		return customerBag;
+
 	}
 	
-	public void delete(List<Customer> customerList, int index) {
+	public Bag update(Bag bag) {
 		
-		customerList.remove(index);
+		int id = (int) bag.getValue(BagKey.ID);
+		String name = (String) bag.getValue(BagKey.NAME);
+		String surname = (String) bag.getValue(BagKey.SURNAME);
+		String tckn = (String) bag.getValue(BagKey.TCKN);
+		
+		Customer customer = customerDao.updateCustomer(id, name, surname, tckn);
+		Bag customerBag = new Bag();
+		
+		customerBag.put(BagKey.ID, customer.getId());
+		customerBag.put(BagKey.NAME, customer.getName());
+		customerBag.put(BagKey.SURNAME, customer.getSurname());
+		customerBag.put(BagKey.TCKN, customer.getTckn());
+		
+		return customerBag;
+	}
+	
+	public Bag delete(Bag bag) {
+		
+		int id = (int) bag.getValue(BagKey.ID);
+		customerDao.deleteCustomer(id);
+		
+		Bag customerBag = new Bag();
+		customerBag.put(BagKey.ID, id);
+		
+		return customerBag;
 	}
 }

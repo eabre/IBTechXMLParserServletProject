@@ -12,7 +12,7 @@ import com.ibtech.util.HibernateUtil;
 public class CustomerDao {
 	
 	//save object
-	public void saveCustomer(Customer customer) {
+	public Customer saveCustomer(Customer customer) {
 		
 		Transaction transaction = null;
 		try(Session session = HibernateUtil.getSessionFactory().openSession()){
@@ -21,34 +21,44 @@ public class CustomerDao {
 			
 			//save object
 			session.save(customer);
-			
-			//commit the transaction
-			transaction.commit();
+			return customer;
 		}catch(Exception e){
 			if(transaction != null) {
 				transaction.rollback();
 			}
+			e.printStackTrace();
 		}
+		
+		return null;
 		
 	}
 	//update object
-	public void updateCustomer(Customer customer) {
+	public Customer updateCustomer(int customerId, String name, String surname, String tckn) {
 		
 		Transaction transaction = null;
 		try(Session session = HibernateUtil.getSessionFactory().openSession()){
 			//start transaction
 			transaction = session.beginTransaction();
-			
+			Customer customer = (Customer) session.get(Customer.class, customerId);
+			customer.setName(name);
+			customer.setSurname(surname);
+			customer.setTckn(tckn);			
 			//save object
 			session.saveOrUpdate(customer);
 			
-			//commit the transaction
+			//Commit olmadan çalışmıyor
 			transaction.commit();
+			
+			return customer;
 		}catch(Exception e){
 			if(transaction != null) {
 				transaction.rollback();
 			}
+			e.printStackTrace();
 		}
+		
+		return null;
+
 		
 	}	
 	//delete object
@@ -91,7 +101,7 @@ public class CustomerDao {
 			customer = session.get(Customer.class, id);
 			
 			//commit the transaction
-			transaction.commit();
+			//transaction.commit();
 		}catch(Exception e){
 			if(transaction != null) {
 				transaction.rollback();
