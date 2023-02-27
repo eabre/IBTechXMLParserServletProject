@@ -24,13 +24,7 @@ public class App
 {
     public static void main( String[] args ) throws Exception
     {
-    	Bag customerBag = new Bag();
-    	customerBag.put(BagKey.ID, (int) 16);
-    	customerBag.put(BagKey.NAME, "Kemal");
-    	customerBag.put(BagKey.SURNAME, "Süzer");
-    	customerBag.put(BagKey.TCKN, "TR453453");
     	
-    	CommandExecuter.executer("update_customer_info", customerBag);
     }
     
 }
